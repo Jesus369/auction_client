@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { graphql } from "react-apollo";
-import { compose } from "redux";
 import gql from "graphql-tag";
 import { Input, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 // Imported store
 
@@ -56,14 +55,16 @@ class Signup extends Component {
             name="password"
             type="text"
           />
-          <Button
-            style={{ marginTop: 30 }}
-            className="submit"
-            primary
-            onClick={this.onSubmit}
-          >
-            Register
-          </Button>
+          <Link to="/login" style={{ textAlign: "center" }}>
+            <Button
+              style={{ marginTop: "2em" }}
+              className="submit"
+              primary
+              onClick={this.onSubmit}
+            >
+              Register
+            </Button>
+          </Link>
         </form>
       </div>
     );
