@@ -1,28 +1,21 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
 import React from "react";
-import { combineReducers } from "redux";
 import ReactDOM from "react-dom";
 import {
   ApolloClient,
   createNetworkInterface,
   ApolloProvider
 } from "react-apollo";
-
+import decode from "jwt-decode";
 import "./styles.css";
 import "semantic-ui-css/semantic.min.css";
 
 // Imported Routes
-import ShowAuction from "./routes/showAuction/ShowAuction";
 import PostAuction from "./routes/postAuction/PostAuction";
 import Home from "./routes/home/Home";
 import Signup from "./routes/signup/Signup";
 import Login from "./routes/login/Login";
-import Sell from "./routes/sell/Sell";
-import store from "./routes/signup/reducer";
-
-// Provider for stores
-import { Provider } from "react-redux";
 
 // Connecting to our server
 const networkInterface = createNetworkInterface({
@@ -66,18 +59,34 @@ const client = new ApolloClient({
   networkInterface
 });
 
-const reducers = combineReducers({
-  apollo: client.reducer()
-});
+const isAuthenticated = () => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  try {
+    decode(token);
+    decode(refreshToken);
+  } catch (error) {
+    return false;
+  }
+  return true;
+};
+
+const PrivateRoute = ({ component: Component, ...rest }) =>
+  <Route
+    {...rest}
+    render={props =>
+      isAuthenticated()
+        ? <Component {...props} />
+        : <Redirect to={{ pathname: "/login" }} />}
+  />;
 
 // Setting up Routes and Server
 const App = (
-  <ApolloProvider client={client} store={store}>
+  <ApolloProvider client={client}>
     <BrowserRouter>
       <Switch>
-        <Route path="/item/:id" component={ShowAuction} />
-        <Route path="/post" exact component={PostAuction} />
-        <Route path="/signup" exact component={Signup} />
+        <PrivateRoute path="/post" exact component={PostAuction} />
+        <Route path="/register" exact component={Signup} />
         <Route path="/login" exact component={Login} />
         <Route path="/" exact component={Home} />
       </Switch>
