@@ -1,0 +1,107 @@
+.image {
+  width: 16em;
+  height: 23em;
+}
+.homeItem {
+  list-style-type: none;
+  margin-left: 2em;
+}
+
+.itemImg {
+  width: 16em;
+  height: 20em;
+}
+/* text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
+
+.segment {
+  text-align: center;
+}
+
+.modal {
+  background-color: #fafafa;
+  border: 1px solid #8e8d8d;
+  border-radius: 5px;
+  margin: 10em auto 0 auto;
+  outline: none;
+  width: 40%;
+  padding: 4em;
+}
+
+.sectionTop {
+  display: flex;
+  flex-direction: row;
+}
+
+.item_description {
+  list-style-type: none;
+}
+
+.item_name {
+  font-family: "future";
+  font-weight: 600;
+  margin-top: 20px;
+}
+.item_text {
+  margin-top: 20px;
+}
+
+.closeButton {
+  color: white;
+  background-color: #5b90cb;
+  font-size: 1.2em;
+  position: absolute;
+  right: 26.4em;
+  top: 9.4em;
+  border: 0;
+  font-size: 25;
+  padding: .5em;
+}
+
+.closeButton:focus {
+  box-shadow: 0 0 4px 1px #50c8e8;
+  outline: none;
+}
+
+.bid_table {
+  border-collapse: collapse;
+}
+
+.dollar_sign {
+  background-color: white;
+  border: 1px solid #dbd9d9;
+  color: #616060;
+  padding: 1em;
+}
+
+.bid_input {
+  background-color: white;
+  border: 1px solid #dbd9d9;
+  color: #616060;
+  padding: 1em;
+}
+
+.input_bid {
+  outline: none;
+  border: none;
+}
+
+.submit_bid {
+  border: none;
+  background-color: #e5e5e5;
+  border-radius: 5px;
+  color: #757474;
+  font-size: 14px;
+  padding: 7px 40px 7px 40px;
+  margin-top: 10px;
+}
+
+.submit_bid:hover {
+  background-color: #cdcbcb;
+}
+.submit_bid:focus {
+  box-shadow: 0 0 1px 1px #ff8e8e;
+  outline: none;
+  font-size: 16px;
+}
