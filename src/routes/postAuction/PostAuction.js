@@ -8,7 +8,8 @@ class PostAuction extends Component {
   state = {
     name: "",
     price: "",
-    expiration_date: ""
+    expiration_date: "",
+    image: ""
   };
 
   preventRefresh = e => {
@@ -24,10 +25,16 @@ class PostAuction extends Component {
   };
 
   submitPost = async () => {
-    const { name, price, expiration_date } = this.state;
-    const response = await this.props.mutate({
-      variables: { name, price, expiration_date }
-    });
+    const { name, price, expiration_date, image } = this.state;
+    let response = null;
+    try {
+      response = await this.props.mutate({
+        variables: { name, price, expiration_date, image }
+      });
+    } catch (err) {
+      console.log(err);
+      return;
+    }
 
     const { ok } = response.data.createAuction;
 
@@ -37,7 +44,7 @@ class PostAuction extends Component {
   };
 
   render() {
-    const { name, price, expiration_date } = this.state;
+    const { name, price, expiration_date, image } = this.state;
     let username = "";
     try {
       const token = localStorage.getItem("token");
@@ -54,13 +61,29 @@ class PostAuction extends Component {
           onSubmit={this.preventRefresh}
         >
           <Input placeholder="Product Name" value={name} name="name" />
-          <Input placeholder="Price" value={price} name="price" />
+          <Input
+            placeholder="Price"
+            value={price}
+            name="price"
+            style={{ marginTop: 10 }}
+          />
           <Input
             placeholder="Duration"
             value={expiration_date}
             name="expiration_date"
+            style={{ marginTop: 10 }}
           />
-          <Button primary onClick={this.submitPost}>
+          <Input
+            placeholder="Image"
+            value={image}
+            name="image"
+            style={{ marginTop: 10 }}
+          />
+          <Button
+            primary
+            style={{ marginTop: "2em" }}
+            onClick={this.submitPost}
+          >
             Post Item
           </Button>
         </form>
@@ -70,11 +93,17 @@ class PostAuction extends Component {
 }
 
 const createAuctionMutation = gql`
-  mutation($name: String!, $price: Float!, $expiration_date: Int!) {
+  mutation(
+    $name: String!
+    $price: Float!
+    $expiration_date: Int!
+    $image: String!
+  ) {
     createAuction(
       name: $name
       price: $price
       expiration_date: $expiration_date
+      image: $image
     ) {
       ok
     }
